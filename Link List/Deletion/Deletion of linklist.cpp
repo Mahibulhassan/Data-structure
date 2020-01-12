@@ -1,23 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@Mahibulhassan 
-AliAkberAakash
-/
-Data_Structures
-1
-00
- Code Issues 0 Pull requests 0 Actions Projects 0 Wiki Security Insights
-Data_Structures/1.Linked Lists/deletion/delete from n'th position.cpp
-@liverwort2 liverwort2 new
-10ab786 on Mar 20, 2017
-146 lines (113 sloc)  1.92 KB
- 
 #include<stdio.h>
 #include<stdlib.h>
 
