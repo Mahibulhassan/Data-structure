@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define max 1000
+
+int parent [max];
+int rankparent [max];
+
+void initset(int n)
+{
+    for(int i=1; i<=n; i++)
+    {
+        parent[i]=i;
+        rankparent[i]=0;
+    }
+}
+int findparent(int x)
+{
+    if(parent[x]!=x)
+    {
+        return parent[x]=findparent(parent[x]);
+    }
+    else
+        return x;
+}
+
+void unionset(int x,int y)
+{
+    int px=findparent(x);
+    int py=findparent(y);
+
+    if(px==py)
+        return ;
+    if(rankparent[px]<rankparent[py])
+        parent[px]=py;
+    else if(rankparent[px]>rankparent[py])
+        parent[py]=px;
+    else
+    {
+        parent[py]=px;
+        rankparent[px]++;
+    }
+}
+
+void print(int n)
+{
+    for(int i=1; i<=n; i++)
+        cout<<"Node is : "<<i<<" parent is " <<parent[i]<<" Rank is : "<<rankparent[i]<<endl;
+}
+
+int main()
+{
+    int test;
+    cin>>test;
+    while(test--)
+    {
+        int n,m;
+        cin>>n>>m;
+        initset(n);
+
+        while(m--)
+        {
+            int x,y;
+            cin>>x>>y;
+            unionset(x,y);
+        }
+
+
+        print(n);
+
+    }
+
+    return 0;
+}
