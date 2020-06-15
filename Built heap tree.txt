@@ -44,6 +44,8 @@ int main()
 
     build_maxheap(arr,n);
 
+     int n = sizeof(arr)/sizeof(arr[0]);
+
 
     cout << "heap tree \n";
     printArray(arr,n);
