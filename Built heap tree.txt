@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void max_heapify (int Arr[ ], int i, int N)
+    {
+        int largest;
+        int left = 2*i ;
+        int right = 2*i +1  ;
+        if(left<= N and Arr[left] > Arr[i] )
+              largest = left;
+        else
+             largest = i;
+        if(right <= N and Arr[right] > Arr[largest] )
+            largest = right;
+        if(largest != i )
+        {
+            swap (Arr[i] , Arr[largest]);
+            max_heapify (Arr, largest,N);
+        }
+     }
+
+void build_maxheap (int Arr[ ],int N)
+    {
+        for(int i = N/2 ; i >= 1 ; i-- )
+        {
+            max_heapify (Arr, i,N) ;
+        }
+    }
+
+void printArray(int arr[], int n)
+{
+    cout<<n<<endl;
+
+
+    for (int i=1; i<=n; i++)
+        cout << arr[i] << " ";
+    cout << "\n";
+}
+
+int main()
+{
+    int arr[] = {0,12, 11, 13, 5, 6, 7 , 42 , 54 ,87};
+    int n = sizeof(arr)/sizeof(arr[0]);
+
+    build_maxheap(arr,n);
+
+
+    cout << "heap tree \n";
+    printArray(arr,n);
+}
+
