@@ -1,0 +1,166 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef struct el
+{
+    char name[256];
+    struct el *next;
+}node;
+node *hashtable[10];
+int hashsize=10;
+
+int stringtokey(char name[])
+{
+    int c,s=0;
+    for(int i=0;i<strlen(name);i++)
+    {
+        c=name[i];
+        s+=c;
+    }
+    return s;
+}
+void presentation()
+{
+    cout<<"\t\tHash table in cpp \n\n";
+    cout<<"\t\tPress 1 to add node\n\n";
+    cout<<"\t\tPress 2 for search node\n\n";
+    cout<<"\t\tPress 3 to delete a node\n\n";
+    cout<<"\t\tPress 4 to print the hash table\n\n";
+    cout<<"\t\tPress any other key for exit.. \n\n";
+}
+void addnode()
+{
+    int ascii,key;
+    node *n,*n1;
+    cout<<"adding node...."<<endl;
+    n=new node();
+    cout<<"Node name : ";
+    cin>>n->name;
+    n->next=NULL;
+    ascii=stringtokey(n->name);
+    key=ascii%hashsize;
+    if(hashtable[key]==NULL)
+    {
+        hashtable[key]=n;
+    }
+    else
+    {
+        for(n1=hashtable[key];n1->next !=NULL;n1=n1->next);
+        n1->next=n;
+    }
+
+}
+int searchnode(char newname[])
+{
+    int ascii=stringtokey(newname);
+    int key=ascii %hashsize;
+    node *n;
+
+    for(n=hashtable[key];n!=NULL;n=n->next)
+    {
+
+        if(strcmp(n->name,newname)==0)
+        {
+            return key;
+        }
+    }
+    return -1;
+}
+void deletenode(char newname[])
+{
+    cout<<"Delete Node..."<<endl;
+    int ascii =stringtokey(newname);
+    int key=ascii%hashsize;
+    node *n,*n1;
+    if(strcmp(hashtable[key]->name,newname)==0)
+    {
+        n=hashtable[key];
+        hashtable[key]=hashtable[key]->next;
+        free(n);
+        return;
+    }
+    for(n=hashtable[key];n->next !=NULL;n=n->next)
+    {
+        n1=n->next;
+        if(strcmp(n1->name,newname)==0)
+        {
+            n->next=n1->next;
+            free(n1);
+            break;
+        }
+    }
+}
+
+void printlist(node *n)
+{
+    node *n1;
+    for(n1=n;n1!=NULL;n1=n1->next)
+    {
+        cout<<n1->name<<" ";
+    }
+}
+void printhash()
+{
+    for(int i=0;i<hashsize;i++)
+    {
+        printf("\nHashtable[%d] : ",i);
+        printlist(hashtable[i]);
+    }
+}
+
+int main()
+{
+    for(int i=0;i<hashsize;i++)
+    {
+        hashtable[i]=NULL;
+    }
+    char Name[256];
+    int key,action=1;
+    presentation();
+    while((action==1)||(action==2)||(action==3)||(action==4))
+    {
+        if(action==1)
+        {
+            addnode();
+        }
+        if(action==2)
+        {
+            cout<<"NOde name :";
+            cin>>Name;
+            key=searchnode(Name);
+            if(key==-1)
+            {
+                cout<<"Node doesn't exist.."<<endl;
+            }
+            else
+            {
+                cout<<"Node exist in : "<<endl;
+                printf("\nHashtable[%d]:",key);
+                printlist(hashtable[key]);
+            }
+        }
+        if(action==3)
+        {
+            cout<<"Node name :";
+            cin>>Name;
+            key=searchnode(Name);
+            if(key==-1)
+            {
+                cout<<"Key doesn't exist.."<<endl;
+            }
+            else
+            {
+                deletenode(Name);
+            }
+
+        }
+
+        if (action==4)
+        {
+            printhash();
+        }
+        cout<<"\nChose action : ";
+        cin>>action;
+    }
+}
+
