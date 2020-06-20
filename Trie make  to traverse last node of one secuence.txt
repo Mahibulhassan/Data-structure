@@ -1,0 +1,73 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct TrieNode
+{
+    struct TrieNode *childrens[26];
+    int numMatch;
+    bool isEndElement;
+};
+typedef struct TrieNode node;
+node * getNode()
+{
+    node *temp = new TrieNode;
+    temp->numMatch = 0;
+    temp->isEndElement = false;
+    for(int i=0; i<26; i++)
+    {
+        temp->childrens[i] = NULL;
+    }
+    return temp;
+}
+void insertNode(node *root,string key)
+{
+    node *tempNode = root;
+    for(int i=0; key[i]; i++)
+    {
+        int index = key[i]-'a';
+        if(!tempNode->childrens[index])
+        {
+            tempNode->childrens[index] = getNode();
+        }
+        tempNode = tempNode->childrens[index];
+        (tempNode->numMatch) += 1;
+    }
+    tempNode->isEndElement = true;
+}
+int searchNode(node *root,string key)
+{
+    node *tempNode = root;
+    int index;
+    for(int i=0; key[i]; i++)
+    {
+        index = key[i]-'a';
+        if(!tempNode->childrens[index])
+            return 0;
+        tempNode = tempNode->childrens[index];
+    }
+    return tempNode->numMatch;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int t;
+    cin >>t;
+    node *root = getNode();
+    for(int i=0; i<t; i++)
+    {
+        string key,word;
+        cin>>key>>word;
+        if(key == "add")
+        {
+            insertNode(root,word);
+        }
+        else
+        {
+            cout<<searchNode(root,word)<<'\n';
+        }
+
+    }
+}
